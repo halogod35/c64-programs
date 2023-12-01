@@ -1,0 +1,2 @@
+10 print chr$(205+int(rnd(1)*2));
+20 goto 10
