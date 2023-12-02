@@ -1,36 +1,62 @@
 10 print chr$(147)
 20 poke 646,1: poke 53280,0: poke 53281,0
-30 r=0, c=0
-100 rem intro
-110 print "simple life"
-111 print "v 0.0.1"
-112 print ""
-113 print "ported from t-84"
-114 print "to the c64"
-115 gosub 200
-120 print chr$(147)
-121 print "halogod"
-130 print chr$(147)
-131 print "silence"
+50 rem intro
+51 sp = 10: ze = 10: a$ = "simple life": gosub 100
+52 sp = 10: ze = 11: a$ = "v 0.0.2": gosub 100
+53 sp = 10: ze = 12: a$ = "": gosub 100
+54 sp = 10: ze = 13: a$ = "ported from t-84": gosub 100
+55 sp = 10: ze = 14: a$ = "to the c64": gosub 100: gosub 200
+60 print chr$(147)
+61 sp = 10: ze = 12: a$ = "halogod": gosub 100: gosub 200
+62 sp = 10: ze = 12: a$ = "silence": gosub 100: gosub 200
+63 goto 300
+100 rem character positioning and printing
+110 poke 221,sp: poke 214,ze: sys 58640: print a$: return
 200 rem sleep
 210 goto 230
 220 t0=ti: for t=t0+t*60 to t: t=ti: t=t-5184e3*(t<t0): next: return
-230 t=5: gosub 220
+230 t=5: gosub 220: return
 300 rem main menu
 310 print chr$(147)
 320 print "simple life"
 330 print ""
-331 print "1 - home"
-332 print "2 - bank"
-333 print "3 - car"
-334 print "4 - quit"
-335 print ""
+331 print "1 - bank"
+332 print "2 - car shop"
+333 print "3 - bar"
+334 print "4 - supplies"
+335 print "5 - your car"
+336 print "6 - quit"
+337 print ""
 340 input "where to";i
 341 if i=1 then gosub 1000
 342 if i=2 then gosub 2000
 343 if i=3 then gosub 3000
-344 if i=4 then goto 4000
-1000 rem home
-2000 rem bank
-3000 rem car
-4000 end
+344 if i=4 then gosub 4000
+345 if i=5 then gosub 5000
+346 if i=6 then goto 6000
+1000 rem bank
+1010 print chr$(147)
+1020 print "bank"
+1030 print ""
+1031 print "1 - withdrawl"
+1032 print "2 - deposit"
+1033 print "3 - view bank account"
+1034 print "4 - rob bank"
+1035 print "5 - leave bank"
+1036 print ""
+1050 input "what would you like to do";i
+1051 if i=1 then gosub 1100
+1052 if i=2 then gosub 1200
+1053 if i=3 then gosub 1300
+1054 if i=4 then gosub 1400
+1055 if i=5 then goto 300
+1100 rem withdrawl
+1200 rem deposit
+1300 rem view bank acc
+1400 rem rob bank
+2000 rem car shop
+3000 rem bar
+4000 rem supplies
+5000 rem your car
+6000 rem quit
+6100 end
