@@ -18,42 +18,49 @@
 230 t=5: gosub 220: return
 300 rem main menu
 310 print chr$(147)
-320 print "simple life"
-330 print ""
-331 print "1 - bank"
-332 print "2 - car shop"
-333 print "3 - bar"
-334 print "4 - supplies"
-335 print "5 - your car"
-336 print "6 - quit"
-337 print ""
-340 input "where to";i
-341 if i=1 then gosub 1000
-342 if i=2 then gosub 2000
-343 if i=3 then gosub 3000
-344 if i=4 then gosub 4000
-345 if i=5 then gosub 5000
-346 if i=6 then goto 6000
+320 print "simple life": print ""
+321 print "1 - bank"
+322 print "2 - car shop"
+323 print "3 - bar"
+324 print "4 - supplies"
+325 print "5 - your car"
+326 print "6 - quit"
+327 print ""
+350 input "where to";i
+351 if i=1 then goto 1000
+352 if i=2 then goto 2000
+353 if i=3 then goto 3000
+354 if i=4 then goto 4000
+355 if i=5 then goto 5000
+356 if i=6 then goto 6000
 1000 rem bank
 1010 print chr$(147)
-1020 print "bank"
-1030 print ""
-1031 print "1 - withdrawl"
-1032 print "2 - deposit"
-1033 print "3 - view bank account"
-1034 print "4 - rob bank"
-1035 print "5 - leave bank"
-1036 print ""
+1020 print "bank": print ""
+1021 print "1 - withdrawl"
+1022 print "2 - deposit"
+1023 print "3 - view bank account"
+1024 print "4 - rob bank"
+1025 print "5 - leave bank"
+1026 print ""
 1050 input "what would you like to do";i
-1051 if i=1 then gosub 1100
-1052 if i=2 then gosub 1200
-1053 if i=3 then gosub 1300
-1054 if i=4 then gosub 1400
+1051 if i=1 then goto 1100
+1052 if i=2 then goto 1200
+1053 if i=3 then goto 1300
+1054 if i=4 then goto 1400
 1055 if i=5 then goto 300
 1100 rem withdrawl
+1110 print chr$(147)
+1120 print "withdrawl": print ""
+1130 input "how much";i
+1131 print "": print "thanks! come again."
+1132 gosub 200: goto 300
 1200 rem deposit
 1300 rem view bank acc
 1400 rem rob bank
+1410 print chr$(147)
+1420 print "bank robbed": print ""
+1421 print "you make it out with"; int(rnd(1)*1e5)+1; "dollars"
+1422 gosub 200: goto 300
 2000 rem car shop
 3000 rem bar
 4000 rem supplies
