@@ -1,0 +1,36 @@
+10 print chr$(147)
+20 poke 646,1: poke 53280,0: poke 53281,0
+30 r=0, c=0
+100 rem intro
+110 print "simple life"
+111 print "v 0.0.1"
+112 print ""
+113 print "ported from t-84"
+114 print "to the c64"
+115 gosub 200
+120 print chr$(147)
+121 print "halogod"
+130 print chr$(147)
+131 print "silence"
+200 rem sleep
+210 goto 230
+220 t0=ti: for t=t0+t*60 to t: t=ti: t=t-5184e3*(t<t0): next: return
+230 t=5: gosub 220
+300 rem main menu
+310 print chr$(147)
+320 print "simple life"
+330 print ""
+331 print "1 - home"
+332 print "2 - bank"
+333 print "3 - car"
+334 print "4 - quit"
+335 print ""
+340 input "where to";i
+341 if i=1 then gosub 1000
+342 if i=2 then gosub 2000
+343 if i=3 then gosub 3000
+344 if i=4 then goto 4000
+1000 rem home
+2000 rem bank
+3000 rem car
+4000 end
