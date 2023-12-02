@@ -1,0 +1,2 @@
+10 def fn fr(x)=fre(0)-65536*(fre(0)<0)
+20 print fn fr(0);"bytes free"
