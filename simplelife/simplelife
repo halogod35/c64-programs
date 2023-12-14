@@ -1,25 +1,27 @@
-10 gosub 300
-20 poke 646,1: poke 53280,0: poke 53281,0
-30 c = 0: b = 0: y = 18
-50 rem intro
-51 sp = 10: ze = 10: a$ = "simple life": gosub 100
-52 sp = 10: ze = 11: a$ = "v 0.0.3": gosub 100
-53 sp = 10: ze = 13: a$ = "ported from t-84": gosub 100
-54 sp = 10: ze = 14: a$ = "to the c64": gosub 100: gosub 200
-60 gosub 300
-61 sp = 10: ze = 12: a$ = "halogod": gosub 100: gosub 200
-62 sp = 10: ze = 12: a$ = "silence": gosub 100: gosub 200
-63 goto 500
-100 rem character positioning and printing
-110 poke 221,sp: poke 214,ze: sys 58640: print a$: return
-200 rem sleep
-210 goto 230
-220 t0=ti: for t=t0+t*60 to t: t=ti: t=t-5184e3*(t<t0): next: return
-230 t=5: gosub 220: return
-300 rem clear screen
-310 print chr$(147): return
+1 gosub 10
+2 poke 646,1: poke 53280,0: poke 53281,0
+3 c = 0: b = 0: y = 18
+4 car = 0
+5 goto 100
+10 rem clear screen
+11 print chr$(147): return
+20 rem character positioning and printing
+21 poke 221,sp: poke 214,ze: sys 58640: print a$: return
+30 rem sleep
+31 goto 33
+32 t0=ti: for t=t0+t*60 to t: t=ti: t=t-5184e3*(t<t0): next: return
+33 t=5: gosub 32: return
+100 rem intro
+110 sp = 10: ze = 10: a$ = "simple life": gosub 20
+111 sp = 10: ze = 11: a$ = "v 0.0.3": gosub 20
+112 sp = 10: ze = 13: a$ = "ported from t-84": gosub 20
+113 sp = 10: ze = 14: a$ = "to the c64": gosub 20: gosub 30
+120 gosub 10
+121 sp = 10: ze = 12: a$ = "halogod": gosub 20: gosub 30
+122 sp = 10: ze = 12: a$ = "silence": gosub 20: gosub 30
+123 goto 500
 500 rem main menu
-510 gosub 300
+510 gosub 10
 520 print "simple life": print ""
 521 print "1 - bank"
 522 print "2 - car shop"
@@ -36,7 +38,7 @@
 555 if i=5 then goto 5000
 556 if i=6 then goto 6000
 1000 rem bank
-1010 gosub 300
+1010 gosub 10
 1020 print "bank": print ""
 1021 print "1 - withdrawl"
 1022 print "2 - deposit"
@@ -51,49 +53,63 @@
 1054 if i=4 then goto 1400
 1055 if i=5 then goto 500
 1100 rem withdrawl
-1110 gosub 300
+1110 gosub 10
 1120 print "withdrawl": print ""
 1130 input "how much";cw
 1131 if cw > b then goto 1140
 1132 if cw < b then b = b - cw: c = c + cw
 1133 print "": print "thanks! come again."
-1134 gosub 200: goto 500
+1134 gosub 30: goto 500
 1140 print "": print "you do not have enough funds"
-1141 gosub 200: goto 1100
+1141 gosub 30: goto 1100
 1200 rem deposit
-1210 gosub 300
+1210 gosub 10
 1220 print "deposit": print ""
 1230 input "how much";cd
 1231 if cd > c goto 1240
 1232 if cd < c then b = b + cd: c = c - cd
 1233 print "": print "thanks! come again."
-1234 gosub 200: goto 500
+1234 gosub 30: goto 500
 1240 print "": print "you do not have enough funds"
-1241 gosub 200: goto 1200
+1241 gosub 30: goto 1200
 1300 rem view bank acc
-1310 gosub 300
+1310 gosub 10
 1320 print "balance": print ""
 1330 print "you have"; b; "dollars in your bank account"
-1340 gosub 200: goto 1000
+1340 gosub 30: goto 1000
 1400 rem rob bank
-1410 gosub 300
+1410 gosub 10
 1415 ch = int(rnd(0)*100)
 1416 if ch>54 then goto 1450
 1417 if ch<9 then goto 6600
 1420 print "bank robbed": print ""
 1421 cr = int(rnd(0)*1e5)+1: c = c + cr
 1422 print "you make it out with"; cr; "dollars"
-1423 gosub 200: goto 500
+1423 gosub 30: goto 500
 1450 print "robbery failed": print ""
-1451 yr = int(rnd(0)*20)+20: y = y + yr
+1451 yr = int(rnd(0)*20)+20
 1452 print "you are sentenced"; yr; "years in jail"
-1453 gosub 200
-1454 if y > 80 then goto 6700
-1455 goto 1500
+1453 gosub 30
 1500 rem jail
-1510 gosub 300
-1520 print "jail"
-1530 goto 500
+1510 gosub 10
+1520 print "jail": print ""
+1521 print "1 - serve sentence"
+1522 print "2 - bribe guard"
+1523 print "3 - break out of jail"
+1524 print "4 - jeffrey epstein"
+1525 print ""
+1550 input "what now";i
+1551 if i=1 then goto 1600
+1552 if i=2 then goto 500
+1553 if i=3 then goto 500
+1554 if i=4 then goto 6800
+1600 rem serve sentence
+1610 gosub 10
+1620 print "serve sentence": print ""
+1630 print "you serve your sentence of"; yr; "years": y = y + yr
+1640 gosub 30
+1640 if y > 80 then goto 6700
+1650 goto 500
 2000 rem car shop
 3000 rem bar
 4000 rem supplies
@@ -104,10 +120,17 @@
 6600 rem death by failed robbery
 6610 print "robbery failed": print ""
 6620 print "you were shot with"; int(rnd(0)*4)+1; "bullets and died"
-6630 gosub 200: goto 6000
+6630 gosub 30: goto 6000
 6700 rem death by old age
-6710 gosub 300
+6710 gosub 10
 6720 print "old as fuck": print ""
 6730 print "you have died at the old age of"; y
 6740 print "": print "sucks to be you"
-6750 gosub 200: goto 6000
+6750 gosub 30: goto 6000
+6800 rem death by hanging
+6810 gosub 10
+6820 print "suicide": print ""
+6830 print "the convicts craft a makeshift noose"
+6840 print "from toilet paper and then hang you"
+6850 print "from the ceiling"
+6860 gosub 30: goto 6000
