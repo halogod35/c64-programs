@@ -1,40 +1,42 @@
-10 print chr$(147)
+10 gosub 300
 20 poke 646,1: poke 53280,0: poke 53281,0
+30 c = 0: b = 0: y = 18
 50 rem intro
 51 sp = 10: ze = 10: a$ = "simple life": gosub 100
-52 sp = 10: ze = 11: a$ = "v 0.0.2": gosub 100
-53 sp = 10: ze = 12: a$ = "": gosub 100
-54 sp = 10: ze = 13: a$ = "ported from t-84": gosub 100
-55 sp = 10: ze = 14: a$ = "to the c64": gosub 100: gosub 200
-60 print chr$(147)
+52 sp = 10: ze = 11: a$ = "v 0.0.3": gosub 100
+53 sp = 10: ze = 13: a$ = "ported from t-84": gosub 100
+54 sp = 10: ze = 14: a$ = "to the c64": gosub 100: gosub 200
+60 gosub 300
 61 sp = 10: ze = 12: a$ = "halogod": gosub 100: gosub 200
 62 sp = 10: ze = 12: a$ = "silence": gosub 100: gosub 200
-63 goto 300
+63 goto 500
 100 rem character positioning and printing
 110 poke 221,sp: poke 214,ze: sys 58640: print a$: return
 200 rem sleep
 210 goto 230
 220 t0=ti: for t=t0+t*60 to t: t=ti: t=t-5184e3*(t<t0): next: return
 230 t=5: gosub 220: return
-300 rem main menu
-310 print chr$(147)
-320 print "simple life": print ""
-321 print "1 - bank"
-322 print "2 - car shop"
-323 print "3 - bar"
-324 print "4 - supplies"
-325 print "5 - your car"
-326 print "6 - quit"
-327 print ""
-350 input "where to";i
-351 if i=1 then goto 1000
-352 if i=2 then goto 2000
-353 if i=3 then goto 3000
-354 if i=4 then goto 4000
-355 if i=5 then goto 5000
-356 if i=6 then goto 6000
+300 rem clear screen
+310 print chr$(147): return
+500 rem main menu
+510 gosub 300
+520 print "simple life": print ""
+521 print "1 - bank"
+522 print "2 - car shop"
+523 print "3 - bar"
+524 print "4 - supplies"
+525 print "5 - your car"
+526 print "6 - quit"
+527 print ""
+550 input "where to";i
+551 if i=1 then goto 1000
+552 if i=2 then goto 2000
+553 if i=3 then goto 3000
+554 if i=4 then goto 4000
+555 if i=5 then goto 5000
+556 if i=6 then goto 6000
 1000 rem bank
-1010 print chr$(147)
+1010 gosub 300
 1020 print "bank": print ""
 1021 print "1 - withdrawl"
 1022 print "2 - deposit"
@@ -47,23 +49,65 @@
 1052 if i=2 then goto 1200
 1053 if i=3 then goto 1300
 1054 if i=4 then goto 1400
-1055 if i=5 then goto 300
+1055 if i=5 then goto 500
 1100 rem withdrawl
-1110 print chr$(147)
+1110 gosub 300
 1120 print "withdrawl": print ""
-1130 input "how much";i
-1131 print "": print "thanks! come again."
-1132 gosub 200: goto 300
+1130 input "how much";cw
+1131 if cw > b then goto 1140
+1132 if cw < b then b = b - cw: c = c + cw
+1133 print "": print "thanks! come again."
+1134 gosub 200: goto 500
+1140 print "": print "you do not have enough funds"
+1141 gosub 200: goto 1100
 1200 rem deposit
+1210 gosub 300
+1220 print "deposit": print ""
+1230 input "how much";cd
+1231 if cd > c goto 1240
+1232 if cd < c then b = b + cd: c = c - cd
+1233 print "": print "thanks! come again."
+1234 gosub 200: goto 500
+1240 print "": print "you do not have enough funds"
+1241 gosub 200: goto 1200
 1300 rem view bank acc
+1310 gosub 300
+1320 print "balance": print ""
+1330 print "you have"; b; "dollars in your bank account"
+1340 gosub 200: goto 1000
 1400 rem rob bank
-1410 print chr$(147)
+1410 gosub 300
+1415 ch = int(rnd(0)*100)
+1416 if ch>54 then goto 1450
+1417 if ch<9 then goto 6600
 1420 print "bank robbed": print ""
-1421 print "you make it out with"; int(rnd(1)*1e5)+1; "dollars"
-1422 gosub 200: goto 300
+1421 cr = int(rnd(0)*1e5)+1: c = c + cr
+1422 print "you make it out with"; cr; "dollars"
+1423 gosub 200: goto 500
+1450 print "robbery failed": print ""
+1451 yr = int(rnd(0)*20)+20: y = y + yr
+1452 print "you are sentenced"; yr; "years in jail"
+1453 gosub 200
+1454 if y > 80 then goto 6700
+1455 goto 1500
+1500 rem jail
+1510 gosub 300
+1520 print "jail"
+1530 goto 500
 2000 rem car shop
 3000 rem bar
 4000 rem supplies
 5000 rem your car
-6000 rem quit
-6100 end
+6000 rem quit/soft restart
+6010 sys 64738
+6500 rem death cases
+6600 rem death by failed robbery
+6610 print "robbery failed": print ""
+6620 print "you were shot with"; int(rnd(0)*4)+1; "bullets and died"
+6630 gosub 200: goto 6000
+6700 rem death by old age
+6710 gosub 300
+6720 print "old as fuck": print ""
+6730 print "you have died at the old age of"; y
+6740 print "": print "sucks to be you"
+6750 gosub 200: goto 6000
