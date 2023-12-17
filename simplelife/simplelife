@@ -1,7 +1,7 @@
 1 gosub 10
 2 poke 646,1: poke 53280,0: poke 53281,0
 3 c = 0: b = 0: y = 18
-4 car = 0
+4 car = 0: sex = 0: beer = 0: bnk = 0
 5 goto 100
 10 rem clear screen
 11 print chr$(147): return
@@ -10,23 +10,22 @@
 30 rem sleep
 31 goto 33
 32 t0=ti: for t=t0+t*60 to t: t=ti: t=t-5184e3*(t<t0): next: return
-33 t=5: gosub 32: return
+33 t=4: gosub 32: return
 100 rem intro
-110 sp = 10: ze = 10: a$ = "simple life": gosub 20
-111 sp = 10: ze = 11: a$ = "v 0.0.3": gosub 20
-112 sp = 10: ze = 13: a$ = "ported from t-84": gosub 20
-113 sp = 10: ze = 14: a$ = "to the c64": gosub 20: gosub 30
-120 gosub 10
-121 sp = 10: ze = 12: a$ = "halogod": gosub 20: gosub 30
-122 sp = 10: ze = 12: a$ = "silence": gosub 20: gosub 30
-123 goto 500
+101 sp = 10: ze = 10: a$ = "simple life": gosub 20
+102 sp = 10: ze = 11: a$ = "v0.0.4 (alpha)": gosub 20
+103 sp = 10: ze = 13: a$ = "ported from t-84": gosub 20
+104 sp = 10: ze = 14: a$ = "to the c64": gosub 20: gosub 30
+105 gosub 10
+106 sp = 10: ze = 12: a$ = "halogod": gosub 20: gosub 30
+107 sp = 10: ze = 12: a$ = "silence": gosub 20: gosub 30
 500 rem main menu
 510 gosub 10
 520 print "simple life": print ""
 521 print "1 - bank"
 522 print "2 - car shop"
 523 print "3 - bar"
-524 print "4 - supplies"
+524 print "4 - stats"
 525 print "5 - your car"
 526 print "6 - quit"
 527 print ""
@@ -61,7 +60,7 @@
 1133 print "": print "thanks! come again."
 1134 gosub 30: goto 500
 1140 print "": print "you do not have enough funds"
-1141 gosub 30: goto 1100
+1141 gosub 30: goto 1000
 1200 rem deposit
 1210 gosub 10
 1220 print "deposit": print ""
@@ -71,7 +70,7 @@
 1233 print "": print "thanks! come again."
 1234 gosub 30: goto 500
 1240 print "": print "you do not have enough funds"
-1241 gosub 30: goto 1200
+1241 gosub 30: goto 1000
 1300 rem view bank acc
 1310 gosub 10
 1320 print "balance": print ""
@@ -80,46 +79,121 @@
 1400 rem rob bank
 1410 gosub 10
 1415 ch = int(rnd(0)*100)
-1416 if ch>54 then goto 1450
+1416 if ch>59 then goto 1450
 1417 if ch<9 then goto 6600
 1420 print "bank robbed": print ""
-1421 cr = int(rnd(0)*1e5)+1: c = c + cr
+1421 cr = int(rnd(0)*1e5)+3e3: c = c + cr
 1422 print "you make it out with"; cr; "dollars"
-1423 gosub 30: goto 500
-1450 print "robbery failed": print ""
+1423 bnk = bnk + 1
+1424 gosub 30: goto 500
+1450 print "you were caught!": print ""
 1451 yr = int(rnd(0)*20)+20
 1452 print "you are sentenced"; yr; "years in jail"
-1453 gosub 30
+1453 brb = int(rnd(0)*3e4)+1e3
+1454 gosub 30
 1500 rem jail
 1510 gosub 10
 1520 print "jail": print ""
 1521 print "1 - serve sentence"
 1522 print "2 - bribe guard"
-1523 print "3 - break out of jail"
+1523 print "3 - escape"
 1524 print "4 - jeffrey epstein"
 1525 print ""
 1550 input "what now";i
 1551 if i=1 then goto 1600
-1552 if i=2 then goto 500
-1553 if i=3 then goto 500
+1552 if i=2 then goto 1700
+1553 if i=3 then goto 1800
 1554 if i=4 then goto 6800
 1600 rem serve sentence
 1610 gosub 10
-1620 print "serve sentence": print ""
+1620 print "sentence served": print ""
 1630 print "you serve your sentence of"; yr; "years": y = y + yr
 1640 gosub 30
-1640 if y > 80 then goto 6700
-1650 goto 500
+1650 if y > 80 then goto 6700
+1660 goto 500
+1700 rem bribe guard
+1710 gosub 10
+1720 print "bribe guard": print ""
+1730 print "the guard wants"; brb; "dollars": print ""
+1740 print "1 - yes": print "2 - no": print ""
+1750 input "do you pay the bribe";i
+1751 if i=1 then goto 1760
+1752 if i=2 then goto 1500
+1760 if c > brb then c = c - brb
+1761 print "": print "you pay the bribe"
+1762 gosub 30: goto 500
+1763 if c < brb then print "": print "you do not have enough funds"
+1764 gosub 30: goto 1500
+1800 rem escape from jail
+1810 gosub 10
+1820 print "escape": print ""
+1821 print "you must answer this correctly:"
+1850 input "what is the meaning of life";i
+1860 if i=42 then print "": print "you escaped!"
+1861 gosub 30: goto 500
+1870 if i<>42 then print "": print "incorrect! read more books"
+1871 gosub 30: goto 1500
 2000 rem car shop
+2010 gosub 10
+2020 print "carshop": print ""
+2031 print "1 - ford f-150"
+2032 print "2 - volvo s80"
+2033 print "3 - mercedes slk"
+2034 print "4 - batmobile"
+2035 print "5 - leave"
+2050 input "which car to buy";i
+2051 if i=1 then goto 2100
+2052 if i=2 then goto 2200
+2053 if i=3 then goto 2300
+2054 if i=4 then goto 2400
+2055 if i=5 then goto 500
+2100 if c < 35000 then goto 2600
+2110 c = c - 35000: goto 2500
+2200 if c < 55000 then goto 2600
+2210 c = c - 55000: goto 2500
+2300 if c < 125000 then goto 2600
+2310 c = c - 125000: goto 2500
+2400 if c < 2.5e6 then goto 2600
+2410 c = c - 2.5e6: goto 2500
+2500 rem vehicle purchased
+2510 gosub 10
+2520 print "vehicle purchased": print ""
+2530 print "it is yours"
+2540 car = car + 1
+2550 gosub 30: goto 500
+2600 rem vehicle not purchased
+2610 gosub 10
+2620 print "not enough cash": print ""
+2630 print "you do not have enough cash"
+2640 print "to afford this purchase"
+2650 gosub 30: goto 2000
 3000 rem bar
-4000 rem supplies
+3010 goto 500
+4000 rem statistics
+4010 gosub 10
+4020 print "statistics": print ""
+4030 print "age:"; y: print ""
+4040 print "cash:"; c: print ""
+4050 print "cash in bank:"; b: print ""
+4050 print "banks robbed:"; bnk: print ""
+4060 print "chicks screwed:"; sex: print ""
+4070 print "beers chugged:"; beer: print ""
+4080 print "number of cars:"; car: print ""
+4090 gosub 30: goto 500
 5000 rem your car
+5010 gosub 10
+5015 if car > 0 then goto 5100
+5020 print "no car": print ""
+5021 print "you do not have a car"
+5022 gosub 30: goto 500
+5100 rem car menu
+5110 goto 500
 6000 rem quit/soft restart
 6010 sys 64738
 6500 rem death cases
 6600 rem death by failed robbery
 6610 print "robbery failed": print ""
-6620 print "you were shot with"; int(rnd(0)*4)+1; "bullets and died"
+6620 print "you were shot with"; int(rnd(0)*4)+2; "bullets and died"
 6630 gosub 30: goto 6000
 6700 rem death by old age
 6710 gosub 10
