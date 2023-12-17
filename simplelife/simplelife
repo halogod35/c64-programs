@@ -2,7 +2,7 @@
 2 poke 646,1: poke 53280,0: poke 53281,0
 3 c = 0: b = 0: y = 18
 4 car = 0: sex = 0: beer = 0: bnk = 0
-5 goto 100
+5 goto 400
 10 rem clear screen
 11 print chr$(147): return
 20 rem character positioning and printing
@@ -11,17 +11,20 @@
 31 goto 33
 32 t0=ti: for t=t0+t*60 to t: t=ti: t=t-5184e3*(t<t0): next: return
 33 t=4: gosub 32: return
-100 rem intro
-101 sp = 10: ze = 10: a$ = "simple life": gosub 20
-102 sp = 10: ze = 11: a$ = "v0.0.4 (alpha)": gosub 20
-103 sp = 10: ze = 13: a$ = "ported from t-84": gosub 20
-104 sp = 10: ze = 14: a$ = "to the c64": gosub 20: gosub 30
-105 gosub 10
-106 sp = 10: ze = 12: a$ = "halogod": gosub 20: gosub 30
-107 sp = 10: ze = 12: a$ = "silence": gosub 20: gosub 30
+40 rem menu creator
+41 gosub 10
+42 print t$: print "": return
+100 rem cash checker
+400 rem intro
+401 sp = 10: ze = 10: a$ = "simple life": gosub 20
+402 sp = 10: ze = 11: a$ = "v0.0.5 (alpha)": gosub 20
+403 sp = 10: ze = 13: a$ = "ported from t-84": gosub 20
+404 sp = 10: ze = 14: a$ = "to the c64": gosub 20: gosub 30
+405 gosub 10
+406 sp = 10: ze = 12: a$ = "halogod": gosub 20: gosub 30
+407 sp = 10: ze = 12: a$ = "silence": gosub 20: gosub 30
 500 rem main menu
-510 gosub 10
-520 print "simple life": print ""
+520 t$ = "simple life": gosub 40
 521 print "1 - bank"
 522 print "2 - car shop"
 523 print "3 - bar"
@@ -37,8 +40,7 @@
 555 if i=5 then goto 5000
 556 if i=6 then goto 6000
 1000 rem bank
-1010 gosub 10
-1020 print "bank": print ""
+1020 t$ = "bank": gosub 40
 1021 print "1 - withdrawl"
 1022 print "2 - deposit"
 1023 print "3 - view bank account"
@@ -52,18 +54,18 @@
 1054 if i=4 then goto 1400
 1055 if i=5 then goto 500
 1100 rem withdrawl
-1110 gosub 10
-1120 print "withdrawl": print ""
-1130 input "how much";cw
-1131 if cw > b then goto 1140
-1132 if cw < b then b = b - cw: c = c + cw
-1133 print "": print "thanks! come again."
-1134 gosub 30: goto 500
-1140 print "": print "you do not have enough funds"
-1141 gosub 30: goto 1000
+1120 t$ = "withdrawl": gosub 40
+1130 print "cash in bank:"; b
+1140 print "cash on hand:"; c: print ""
+1150 input "how much";cw
+1151 if cw > b then goto 1160
+1152 if cw < b then b = b - cw: c = c + cw
+1153 print "": print "thanks! come again."
+1154 gosub 30: goto 500
+1160 print "": print "you do not have enough funds"
+1161 gosub 30: goto 1000
 1200 rem deposit
-1210 gosub 10
-1220 print "deposit": print ""
+1220 t$ = "deposit": gosub 40
 1230 input "how much";cd
 1231 if cd > c goto 1240
 1232 if cd < c then b = b + cd: c = c - cd
@@ -72,8 +74,7 @@
 1240 print "": print "you do not have enough funds"
 1241 gosub 30: goto 1000
 1300 rem view bank acc
-1310 gosub 10
-1320 print "balance": print ""
+1320 t$ = "balance": gosub 40
 1330 print "you have"; b; "dollars in your bank account"
 1340 gosub 30: goto 1000
 1400 rem rob bank
@@ -92,8 +93,7 @@
 1453 brb = int(rnd(0)*3e4)+1e3
 1454 gosub 30
 1500 rem jail
-1510 gosub 10
-1520 print "jail": print ""
+1520 t$ = "jail": gosub 40
 1521 print "1 - serve sentence"
 1522 print "2 - bribe guard"
 1523 print "3 - escape"
@@ -105,15 +105,13 @@
 1553 if i=3 then goto 1800
 1554 if i=4 then goto 6800
 1600 rem serve sentence
-1610 gosub 10
-1620 print "sentence served": print ""
+1620 t$ = "sentence served": gosub 40
 1630 print "you serve your sentence of"; yr; "years": y = y + yr
 1640 gosub 30
 1650 if y > 80 then goto 6700
 1660 goto 500
 1700 rem bribe guard
-1710 gosub 10
-1720 print "bribe guard": print ""
+1720 t$ = "bribe guard": gosub 40
 1730 print "the guard wants"; brb; "dollars": print ""
 1740 print "1 - yes": print "2 - no": print ""
 1750 input "do you pay the bribe";i
@@ -125,8 +123,7 @@
 1763 if c < brb then print "": print "you do not have enough funds"
 1764 gosub 30: goto 1500
 1800 rem escape from jail
-1810 gosub 10
-1820 print "escape": print ""
+1820 t$ = "escape": gosub 40
 1821 print "you must answer this correctly:"
 1850 input "what is the meaning of life";i
 1860 if i=42 then print "": print "you escaped!"
@@ -134,8 +131,7 @@
 1870 if i<>42 then print "": print "incorrect! read more books"
 1871 gosub 30: goto 1500
 2000 rem car shop
-2010 gosub 10
-2020 print "carshop": print ""
+2020 t$ = "carshop": gosub 40
 2031 print "1 - ford f-150"
 2032 print "2 - volvo s80"
 2033 print "3 - mercedes slk"
@@ -156,22 +152,19 @@
 2400 if c < 2.5e6 then goto 2600
 2410 c = c - 2.5e6: goto 2500
 2500 rem vehicle purchased
-2510 gosub 10
-2520 print "vehicle purchased": print ""
+2520 t$ = "vehicle purchased": gosub 40
 2530 print "it is yours"
 2540 car = car + 1
 2550 gosub 30: goto 500
 2600 rem vehicle not purchased
-2610 gosub 10
-2620 print "not enough cash": print ""
+2620 t$ = "not enough cash": gosub 40
 2630 print "you do not have enough cash"
 2640 print "to afford this purchase"
 2650 gosub 30: goto 2000
 3000 rem bar
 3010 goto 500
 4000 rem statistics
-4010 gosub 10
-4020 print "statistics": print ""
+4020 t$ = "statistics": gosub 40
 4030 print "age:"; y: print ""
 4040 print "cash:"; c: print ""
 4050 print "cash in bank:"; b: print ""
@@ -181,29 +174,26 @@
 4080 print "number of cars:"; car: print ""
 4090 gosub 30: goto 500
 5000 rem your car
-5010 gosub 10
-5015 if car > 0 then goto 5100
-5020 print "no car": print ""
+5010 if car > 0 then goto 5100
+5020 t$ "no car": gosub 40
 5021 print "you do not have a car"
 5022 gosub 30: goto 500
 5100 rem car menu
-5110 goto 500
+5110 gosub 10: goto 500
 6000 rem quit/soft restart
 6010 sys 64738
 6500 rem death cases
 6600 rem death by failed robbery
-6610 print "robbery failed": print ""
-6620 print "you were shot with"; int(rnd(0)*4)+2; "bullets and died"
-6630 gosub 30: goto 6000
+6620 t$ = "robbery failed": gosub 40
+6630 print "you were shot with"; int(rnd(0)*4)+2; "bullets and died"
+6640 gosub 30: goto 6000
 6700 rem death by old age
-6710 gosub 10
-6720 print "old as fuck": print ""
+6720 t$ = "old as fuck": gosub 40
 6730 print "you have died at the old age of"; y
 6740 print "": print "sucks to be you"
 6750 gosub 30: goto 6000
 6800 rem death by hanging
-6810 gosub 10
-6820 print "suicide": print ""
+6820 t$ = "suicide": gosub 40
 6830 print "the convicts craft a makeshift noose"
 6840 print "from toilet paper and then hang you"
 6850 print "from the ceiling"
