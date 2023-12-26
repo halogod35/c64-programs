@@ -1,4 +1,4 @@
-This program continously prints a randomly rotated forward slash in every direction, making a pretty pattern on the screen.
+This program continously and randomly prints either a forward slash or backslash, making a pretty pattern on the screen.
 
 It is pretty useless, but it looks super cool on a crt screen.
 
