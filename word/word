@@ -1,7 +1,7 @@
 1 print chr$(147)
 2 print tab(18);"word"
 3 print tab(11);"creative computing"  
-4 print tab(9);"norristown, new jersey"
+4 print tab(9);"morristown, new jersey"
 5 print: print: print
 6 dim s(7),a(7),l(7),d(7),p(7)
 10 print "i am thinking of a word -- you guess it"
