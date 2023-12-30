@@ -22,7 +22,7 @@
 61 ch = int(rnd(0)*100): return
 400 rem intro
 401 sp = 14: ze = 10: a$ = "simple life": gosub 20
-402 sp = 13: ze = 11: a$ = "v0.2.0 (alpha)": gosub 20
+402 sp = 13: ze = 11: a$ = "v0.2.1 (alpha)": gosub 20
 403 sp = 12: ze = 13: a$ = "ported from t-84": gosub 20
 404 sp = 15: ze = 14: a$ = "to the c64": gosub 20: gosub 30
 405 gosub 10
@@ -64,12 +64,14 @@
 1054 if i=4 then 500
 1100 rem shower
 1110 gosub 60: if ch<9 then 7540
+1115 x = int(rnd(0)*35)+15: y = (x/5.256e5) + y
 1120 t$ = "shower": gosub 40
-1121 print "you shower for"; int(rnd(0)*35)+15; "minutes"
+1121 print "you shower for"; x; "minutes"
 1122 gosub 30: goto 1000
 1200 rem sleep
+1210 x = int(rnd(0)*2)+2: y = (x/8760) + y
 1220 t$ = "sleep": gosub 40
-1221 print "you sleep for"; int(rnd(0)*2)+2; "hours"
+1221 print "you sleep for"; x; "hours"
 1222 gosub 30: goto 1000
 1300 rem computer
 1320 t$ = "computer": gosub 40
@@ -87,7 +89,7 @@
 1370 rem porn
 1371 t$ = "porn": gosub 40
 1372 print "fuck yeah": gosub 30
-1373 print "nice": gosub 30:
+1373 print "nice": gosub 30
 1374 print "sweet": goto 1300
 2000 rem bank
 2020 t$ = "bank": gosub 40
@@ -137,7 +139,7 @@
 2420 print "bank robbed": print
 2421 cr = int(rnd(0)*1e5)+3e3: c = c + cr
 2422 print "you make it out with"; cr; "dollars"
-2423 bnk = bnk + 1
+2423 bnk = bnk + 1: y = (int(rnd(0)*4+2)/5.256e6) + y
 2424 gosub 30: goto 500
 2450 print "you were caught!": print
 2451 yr = int(rnd(0)*20)+20
@@ -169,10 +171,12 @@
 2751 if i=1 then 2760
 2752 if i=2 then 2500
 2760 if c > brb then c = c - brb
-2761 print: print "you pay the bribe"
-2762 gosub 30: goto 500
-2763 if c < brb then print: print "you do not have enough funds"
-2764 gosub 30: goto 2500
+2761 if c < brb then 2770
+2762 print: print "you pay the bribe"
+2763 gosub 30: goto 500
+2770 t$ = "no funds": gosub 40
+2771 print: print "you do not have enough funds"
+2772 gosub 30: goto 2500
 2800 rem escape from jail
 2820 t$ = "escape": gosub 40
 2821 print "you attempt to escape..."
@@ -221,7 +225,7 @@
 4052 if i=2 then 4200
 4053 if i=3 then 500
 4100 rem pick up chick
-4110 sex = 1 + sex
+4110 sex = 1 + sex: y = (1/365.25) + y
 4120 goto 500
 4200 rem drink
 4210 gosub 60
@@ -280,9 +284,8 @@
 7550 rem death by car sucicide
 7551 t$ = "you killed yourself": gosub 40
 7552 print "you hop in the car and drive"
-7553 print "yourself off of the edge"
-7554 print "of a cliff and die"
-7555 gosub 50: goto 7000
+7553 print "yourself off of a cliff and die"
+7554 gosub 50: goto 7000
 7560 rem death by intoxication
 7561 t$ = "alcohol poisoning": gosub 40
 7562 x = int(rnd(0)*5)+17
