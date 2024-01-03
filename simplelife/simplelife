@@ -26,7 +26,7 @@
 103 return
 400 rem intro
 401 sp=14: ze=10: a$="simple life": gosub 20
-402 sp=13: ze=11: a$="v0.3.0 (alpha)": gosub 20
+402 sp=13: ze=11: a$="v0.3.1 (alpha)": gosub 20
 403 sp=12: ze=13: a$="ported from t-84": gosub 20
 404 sp=15: ze=14: a$="to the c64": gosub 20: gosub 30
 405 gosub 10
@@ -195,11 +195,11 @@
 2830 print: print "and make it out!"
 2831 gosub 30: goto 500
 3000 rem car shop
-3020 t$ = "carshop": gosub 40
-3031 print "1 - nissan shitbox"; tab(22); "($35,000)"
-3032 print "2 - mystery machine"; tab(22); "($55,000)"
-3033 print "3 - knightrider"; tab(21); "($175,000)"
-3034 print "4 - batmobile"; tab(19); "($1,500,000)"
+3020 t$="carshop": gosub 40
+3031 print "1 - nissan shitbox"; spc(5); "($35,000)"
+3032 print "2 - mystery machine"; spc(4); "($55,000)"
+3033 print "3 - knightrider"; spc(7); "($175,000)"
+3034 print "4 - batmobile"; spc(7); "($1,500,000)"
 3035 print "5 - leave"
 3050 print: input "which car to buy";i
 3051 if i=1 then 3100
@@ -237,11 +237,10 @@
 4110 x=1/365.25: gosub 100: gosub 60
 4111 if ch<6 then 7570
 4112 if ch>80 then 4130
-4120 sex=1+sex
-4121 t$="bitch fucked": gosub 40
-4122 print "you fuck a bitch": gosub 30
-4123 print "nice" 
-4124 gosub 30: goto 500
+4120 t$="bitch fucked": gosub 40
+4121 print "you fuck a bitch": gosub 30
+4122 print "nice" 
+4123 sex=1+sex: gosub 30: goto 500
 4130 t$="dude fucked": gosub 40
 4131 print "you wake up with someone else in bed": gosub 30
 4132 print "it's a dude": gosub 30
@@ -262,14 +261,49 @@
 5022 gosub 30: goto 500
 5100 rem car menu
 5120 t$="car": gosub 40
-5121 print "1 - sucicide"
-5122 print "2 - leave"
+5121 print "1 - gun shop"
+5122 print "2 - sucicide"
+5123 print "3 - leave"
 5150 print: input "what now";i
-5151 if i=1 then 7550
-5152 if i=2 then 500
+5151 if i=1 then 5200
+5152 if i=2 then 7550
+5153 if i=3 then 500
+5200 rem gun shop
+5220 t$ = "gun shop": gosub 40
+5221 print "1 - boomstick"; spc(14); "($350)"
+5222 print "2 - lawgiver mk. ii"; spc(6); "($3,000)"
+5223 print "3 - endo battle rifle"; spc(3); "($45,000)"
+5224 print "4 - golden gun"; spc(9); "($670,000)"
+5225 print "5 - bfg 9000"; spc(8); "($10,000,000)"
+5226 print "6 - leave"
+5250 print: input "what do you want to buy";i
+5251 if i=1 then goto 5300
+5252 if i=2 then goto 5400
+5253 if i=3 then goto 5500
+5254 if i=4 then goto 5600
+5255 if i=5 then goto 5700
+5256 if i=6 then goto 5100
+5300 if c<350 then 5900
+5310 c=c-350: goto 5800
+5400 if c<3000 then 5900
+5410 c=c-3000: goto 5800
+5500 if c<45000 then 5900
+5510 c=c-45000: goto 5800
+5600 if c<6.7e5 then 5900
+5610 c=c-6.7e5: goto 5800
+5700 if c<1e7 then 5900
+5710 c=c-1e7: goto 5800
+5800 rem gun purchased
+5820 t$="gun purchased": gosub 40
+5821 print "it is yours"
+5830 gun=1+gun: gosub 30: goto 5100
+5900 rem gun not purchased
+5920 t$="not enough cash": gosub 40
+5930 print "you cannot afford this purchase"
+5940 gosub 30: goto 5100
 6000 rem statistics
 6020 t$="statistics": gosub 40
-6021 print "age:"; y: print
+6021 print "age:"; int(y*100)/100: print
 6022 print "cash on hand:"; c: print
 6023 print "cash in bank:"; b: print
 6024 print "total cash:"; c + b: print
@@ -288,7 +322,7 @@
 7513 gosub 50: goto 7000
 7520 rem death by old age
 7521 t$="old as fuck": gosub 40
-7522 print "you have died at the old age of"; y
+7522 print "you have died at the old age of"; int(y*1)/1
 7523 print: print "sucks to be you"
 7524 gosub 50: goto 7000
 7530 rem death by hanging
