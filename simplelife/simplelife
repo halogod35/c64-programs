@@ -26,7 +26,7 @@
 103 return
 400 rem intro
 401 sp=14: ze=10: a$="simple life": gosub 20
-402 sp=13: ze=11: a$="v0.3.1 (alpha)": gosub 20
+402 sp=13: ze=11: a$="v0.3.2 (alpha)": gosub 20
 403 sp=12: ze=13: a$="ported from t-84": gosub 20
 404 sp=15: ze=14: a$="to the c64": gosub 20: gosub 30
 405 gosub 10
@@ -72,13 +72,13 @@
 1111 t=int(rnd(0)*35+15)
 1112 x=t/5.256e5: gosub 100
 1120 t$="shower": gosub 40
-1121 print "you shower for"; t; "minutes"
+1121 print "you shower for"t"minutes"
 1122 gosub 30: goto 1000
 1200 rem sleep
 1210 t=int(rnd(0)*2+2)
 1211 x=t/8760: gosub 100
 1220 t$="sleep": gosub 40
-1221 print "you sleep for"; t; "hours"
+1221 print "you sleep for"t"hours"
 1222 gosub 30: goto 1000
 1300 rem computer
 1320 t$="computer": gosub 40
@@ -92,7 +92,7 @@
 1360 rem games
 1361 x=2/8760: gosub 100
 1362 t$="video games": gosub 40
-1363 print "you get"; int(rnd(0)*155)+5; "headshots"
+1363 print "you get"int(rnd(0)*155)+5"headshots"
 1364 gosub 30: goto 1300
 1370 rem porn
 1371 x=0.5/8760: gosub 100
@@ -115,8 +115,8 @@
 2055 if i=5 then 500
 2100 rem withdrawl
 2120 t$="withdrawl": gosub 40
-2121 print "cash in bank:";b
-2122 print "cash on hand:";c
+2121 print "cash in bank:"b
+2122 print "cash on hand:"c
 2150 print: input "how much";i
 2151 if i=0 then 2000
 2152 if i>b then 2160
@@ -127,8 +127,8 @@
 2161 gosub 30: goto 2000
 2200 rem deposit
 2220 t$="deposit": gosub 40
-2221 print "cash on hand:";c
-2222 print "cash in bank:";b
+2221 print "cash on hand:"c
+2222 print "cash in bank:"b
 2250 print: input "how much";i
 2251 if i=0 then 2000
 2252 if i>c then 2260
@@ -139,7 +139,7 @@
 2261 gosub 30: goto 2000
 2300 rem view bank acc
 2320 t$="balance": gosub 40
-2330 print "you have"; b; "dollars"
+2330 print "you have"b"dollars"
 2331 print "in your bank account"
 2340 gosub 30: goto 2000
 2400 rem rob bank
@@ -149,11 +149,11 @@
 2420 print "bank robbed": print
 2421 bnk=bnk+1: x=(int(rnd(0)*4+2)/5.256e6): gosub 100
 2422 cr=int(rnd(0)*1e5)+3e3: c=c+cr
-2423 print "you make it out with"; cr; "dollars"
+2423 print "you make it out with"cr"dollars"
 2424 gosub 30: goto 500
 2450 print "you were caught!": print
 2451 yr=int(rnd(0)*20)+20
-2452 print "you are sentenced"; yr; "years in jail"
+2452 print "you are sentenced"yr"years in jail"
 2453 brb=int(rnd(0)*3e4)+1e3
 2454 gosub 30
 2500 rem jail
@@ -170,12 +170,12 @@
 2600 rem serve sentence
 2610 x=yr: gosub 100
 2620 t$="sentence served": gosub 40
-2630 print "you serve your sentence of"; yr; "years"
+2630 print "you serve your sentence of"yr"years"
 2640 gosub 30: goto 500
 2700 rem bribe guard
 2720 t$="bribe guard": gosub 40
-2730 print "the guard wants"; brb; "dollars": print
-2740 print "1 - yes": print "2 - no"
+2730 print "the guard wants"brb"dollars": print
+2731 print "1 - yes": print "2 - no"
 2750 print: input "do you pay the bribe";i
 2751 if i=1 then 2760
 2752 if i=2 then 2500
@@ -196,10 +196,10 @@
 2831 gosub 30: goto 500
 3000 rem car shop
 3020 t$="carshop": gosub 40
-3031 print "1 - nissan shitbox"; spc(5); "($35,000)"
-3032 print "2 - mystery machine"; spc(4); "($55,000)"
-3033 print "3 - knightrider"; spc(7); "($175,000)"
-3034 print "4 - batmobile"; spc(7); "($1,500,000)"
+3031 print "1 - nissan shitbox"spc(5)"($35,000)"
+3032 print "2 - mystery machine"spc(4)"($55,000)"
+3033 print "3 - knightrider"spc(7)"($175,000)"
+3034 print "4 - batmobile"spc(7)"($1,500,000)"
 3035 print "5 - leave"
 3050 print: input "which car to buy";i
 3051 if i=1 then 3100
@@ -252,7 +252,7 @@
 4212 g=x+g
 4213 if g>22 then 7560
 4220 t$="beers chugged": gosub 40
-4221 print "you chug"; x; "beers"
+4221 print "you chug"x"beers"
 4222 gosub 30: goto 4000
 5000 rem your car
 5010 if car>0 then 5100
@@ -261,38 +261,58 @@
 5022 gosub 30: goto 500
 5100 rem car menu
 5120 t$="car": gosub 40
-5121 print "1 - gun shop"
-5122 print "2 - sucicide"
-5123 print "3 - leave"
+5121 print "1 - mall"
+5122 print "2 - gun shop"
+5123 print "3 - sucicide"
+5124 print "4 - leave"
 5150 print: input "what now";i
 5151 if i=1 then 5200
-5152 if i=2 then 7550
-5153 if i=3 then 500
-5200 rem gun shop
-5220 t$ = "gun shop": gosub 40
-5221 print "1 - boomstick"; spc(14); "($350)"
-5222 print "2 - lawgiver mk. ii"; spc(6); "($3,000)"
-5223 print "3 - endo battle rifle"; spc(3); "($45,000)"
-5224 print "4 - golden gun"; spc(9); "($670,000)"
-5225 print "5 - bfg 9000"; spc(8); "($10,000,000)"
-5226 print "6 - leave"
-5250 print: input "what do you want to buy";i
-5251 if i=1 then goto 5300
-5252 if i=2 then goto 5400
-5253 if i=3 then goto 5500
-5254 if i=4 then goto 5600
-5255 if i=5 then goto 5700
-5256 if i=6 then goto 5100
-5300 if c<350 then 5900
-5310 c=c-350: goto 5800
-5400 if c<3000 then 5900
-5410 c=c-3000: goto 5800
-5500 if c<45000 then 5900
-5510 c=c-45000: goto 5800
-5600 if c<6.7e5 then 5900
-5610 c=c-6.7e5: goto 5800
-5700 if c<1e7 then 5900
-5710 c=c-1e7: goto 5800
+5152 if i=2 then 5300
+5153 if i=3 then 7550
+5154 if i=4 then 500
+5200 rem mall
+5220 t$ = "mall": gosub 40
+5221 print "1 - spencers"
+5222 print "2 - abercrombie"
+5223 print "3 - swarovski"
+5224 print "4 - aladdin's castle"
+5225 print "5 - leave": print
+5250 input "which place";i
+5251 if i=1 then goto 5260
+5252 if i=2 then goto 5260
+5253 if i=3 then goto 5260
+5254 if i=4 then goto 5260
+5255 if i=5 then goto 5100
+5260 rem closed
+5261 t$ = "closed": gosub 40
+5262 print "this store is closed"
+5263 print "until further notice"
+5264 gosub 30: goto 5200
+5300 rem gun shop
+5320 t$ = "gun shop": gosub 40
+5321 print "1 - boomstick"spc(14)"($350)"
+5322 print "2 - lawgiver mk. ii"spc(6)"($3,000)"
+5323 print "3 - endo battle rifle"spc(3)"($45,000)"
+5324 print "4 - golden gun"spc(9)"($670,000)"
+5325 print "5 - bfg 9000"spc(8)"($10,000,000)"
+5326 print "6 - leave"
+5350 print: input "what do you want to buy";i
+5351 if i=1 then goto 5410
+5352 if i=2 then goto 5420
+5353 if i=3 then goto 5430
+5354 if i=4 then goto 5440
+5355 if i=5 then goto 5450
+5356 if i=6 then goto 5100
+5410 if c<350 then 5900
+5415 c=c-350: goto 5800
+5420 if c<3000 then 5900
+5425 c=c-3000: goto 5800
+5430 if c<45000 then 5900
+5435 c=c-45000: goto 5800
+5440 if c<6.7e5 then 5900
+5445 c=c-6.7e5: goto 5800
+5450 if c<1e7 then 5900
+5455 c=c-1e7: goto 5800
 5800 rem gun purchased
 5820 t$="gun purchased": gosub 40
 5821 print "it is yours"
@@ -303,26 +323,26 @@
 5940 gosub 30: goto 5100
 6000 rem statistics
 6020 t$="statistics": gosub 40
-6021 print "age:"; int(y*100)/100: print
-6022 print "cash on hand:"; c: print
-6023 print "cash in bank:"; b: print
-6024 print "total cash:"; c + b: print
-6025 print "banks robbed:"; bnk: print
-6026 print "chicks screwed:"; sex: print
-6027 print "beers chugged:"; beer: print
-6028 print "number of cars:"; car: print
-6029 print "guns owned:"; gun
+6021 print "age:"int(y*100)/100: print
+6022 print "cash on hand:"c: print
+6023 print "cash in bank:"b: print
+6024 print "total cash:"c + b: print
+6025 print "banks robbed:"bnk: print
+6026 print "chicks screwed:"sex: print
+6027 print "beers chugged:"beer: print
+6028 print "number of cars:"car: print
+6029 print "guns owned:"gun
 6030 gosub 50: goto 500
 7000 rem end
 7010 sys 64738
 7500 rem death cases
 7510 rem death by bullets
 7511 t$="you died": gosub 40
-7512 print "you were shot with"; int(rnd(0)*4)+2; "bullets and died"
+7512 print "you were shot with"int(rnd(0)*4)+2"bullets and died"
 7513 gosub 50: goto 7000
 7520 rem death by old age
 7521 t$="old as fuck": gosub 40
-7522 print "you have died at the old age of"; int(y*1)/1
+7522 print "you have died at the old age of"int(y*1)/1
 7523 print: print "sucks to be you"
 7524 gosub 50: goto 7000
 7530 rem death by hanging
@@ -333,7 +353,7 @@
 7535 gosub 50: goto 7000
 7540 rem death by shower
 7541 t$="you drowned": gosub 40
-7542 print "you were in the shower for"; int(rnd(0)*45)+45
+7542 print "you were in the shower for"int(rnd(0)*45)+45
 7543 print "minutes, fell asleep, and drowned"
 7544 gosub 50: goto 7000
 7550 rem death by car sucicide
@@ -343,7 +363,7 @@
 7554 gosub 50: goto 7000
 7560 rem death by intoxication
 7561 t$="alcohol poisoning": gosub 40
-7562 print "you drank"; g; "beers today"
+7562 print "you drank"g"beers today"
 7563 print "you die of too much alcohol"
 7564 gosub 30
 7565 print: print "you dumb fuck"
